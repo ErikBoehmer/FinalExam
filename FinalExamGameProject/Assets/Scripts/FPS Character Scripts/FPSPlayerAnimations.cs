@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class FPSPlayerAnimations : NetworkBehaviour {
+public class FPSPlayerAnimations : NetworkBehaviour
+{
 
 	private Animator anim;
 
@@ -20,57 +21,69 @@ public class FPSPlayerAnimations : NetworkBehaviour {
 
 	private NetworkAnimator networkAnim;
 
-	void Awake () {
+	void Awake ()
+    {
 		anim = GetComponent<Animator> ();
 		networkAnim = GetComponent<NetworkAnimator> ();
 	}
 	
-	public void Movement(float magnitude) {
+	public void Movement(float magnitude)
+    {
 		anim.SetFloat (MOVE, magnitude);
 	}
 
-	public void PlayerJump(float velocity) {
+	public void PlayerJump(float velocity)
+    {
 		anim.SetFloat (VELOCITY_Y, velocity);
 	}
 
-	public void PlayerCrouch(bool isCrouching) {
+	public void PlayerCrouch(bool isCrouching)
+    {
 		anim.SetBool (CROUCH, isCrouching);
 	}
 
-	public void PlayerCrouchWalk(float magnitude) {
+	public void PlayerCrouchWalk(float magnitude)
+    {
 		anim.SetFloat (CROUCH_WALK, magnitude);
 	}
 
-	public void Shoot(bool isStanding) {
-		if (isStanding) {
+	public void Shoot(bool isStanding)
+    {
+		if (isStanding)
+        {
 			anim.SetTrigger (STAND_SHOOT);
 
-			// sync triggers manually
+			
 			networkAnim.SetTrigger(STAND_SHOOT);
-		} else {
+		} else
+        {
 			anim.SetTrigger (CROUCH_SHOOT);
 
-			// sync triggers manually
+			
 			networkAnim.SetTrigger(CROUCH_SHOOT);
 		}
 	}
 
-	public void ReloadGun() {
+	public void ReloadGun()
+    {
 		anim.SetTrigger (RELOAD);
 
 		// sync triggers manually
 		networkAnim.SetTrigger(RELOAD);
 	}
 
-	public void ChangeController(bool isPistol) {
-		if (isPistol) {
+	public void ChangeController(bool isPistol)
+    {
+		if (isPistol)
+        {
 			anim.runtimeAnimatorController = animController_Pistol;
-		} else {
+		} else
+        {
 			anim.runtimeAnimatorController = animController_MachineGun;
 		}
 	}
 
-} // class
+} 
 
 
 

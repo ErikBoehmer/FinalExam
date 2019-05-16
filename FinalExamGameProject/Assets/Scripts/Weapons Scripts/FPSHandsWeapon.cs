@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FPSHandsWeapon : MonoBehaviour {
+public class FPSHandsWeapon : MonoBehaviour
+{
 
 	public AudioClip shootClip, reloadClip;
 	private AudioSource audioManager;
@@ -13,7 +14,8 @@ public class FPSHandsWeapon : MonoBehaviour {
 	private string SHOOT = "Shoot";
 	private string RELOAD = "Reload";
 
-	void Awake () {
+	void Awake ()
+    {
 		muzzleFlash = transform.Find ("MuzzleFlash").gameObject;
 		muzzleFlash.SetActive (false);
 
@@ -21,8 +23,10 @@ public class FPSHandsWeapon : MonoBehaviour {
 		anim = GetComponent<Animator> ();
 	}
 	
-	public void Shoot() {
-		if (audioManager.clip != shootClip) {
+	public void Shoot()
+    {
+		if (audioManager.clip != shootClip)
+        {
 			audioManager.clip = shootClip;
 		}
 		audioManager.Play ();
@@ -32,26 +36,30 @@ public class FPSHandsWeapon : MonoBehaviour {
 		anim.SetTrigger (SHOOT);
 	}
 
-	IEnumerator TurnMuzzleFlashOn() {
+	IEnumerator TurnMuzzleFlashOn()
+    {
 		muzzleFlash.SetActive (true);
 		yield return new WaitForSeconds (0.05f);
 		muzzleFlash.SetActive (false);
 	}
 
-	public void Reload() {
+	public void Reload()
+    {
 		StartCoroutine (PlayReloadSound ());
 		anim.SetTrigger (RELOAD);
 	}
 
-	IEnumerator PlayReloadSound() {
+	IEnumerator PlayReloadSound()
+    {
 		yield return new WaitForSeconds (0.8f);
-		if (audioManager.clip != reloadClip) {
+		if (audioManager.clip != reloadClip)
+        {
 			audioManager.clip = reloadClip;
 		}
 		audioManager.Play ();
 	}
 
-} // class
+} 
 
 
 

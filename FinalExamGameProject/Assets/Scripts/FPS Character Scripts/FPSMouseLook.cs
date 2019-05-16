@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FPSMouseLook : MonoBehaviour {
+public class FPSMouseLook : MonoBehaviour
+{
 
 	public enum RotationAxes { MouseX, MouseY }
 	public RotationAxes axes = RotationAxes.MouseY;
@@ -25,35 +26,43 @@ public class FPSMouseLook : MonoBehaviour {
 
 	private float mouseSensivity = 1.7f;
 
-	void Start () {
+	void Start ()
+    {
 		originalRotation = transform.rotation;
 	}
 
-	void LateUpdate () {
+	void LateUpdate ()
+    {
 		HandleRotation ();
 	}
 
-	float ClampAngle(float angle, float min, float max) {
-		if (angle < -360f) {
+	float ClampAngle(float angle, float min, float max)
+    {
+		if (angle < -360f)
+        {
 			angle += 360f;
 		}
 
-		if (angle > 360f) {
+		if (angle > 360f)
+        {
 			angle -= 360f;
 		}
 
 		return Mathf.Clamp (angle, min, max);
 	}
 
-	void HandleRotation() {
-		if (currentSensivity_X != mouseSensivity || currentSensivity_Y != mouseSensivity) {
+	void HandleRotation()
+    {
+		if (currentSensivity_X != mouseSensivity || currentSensivity_Y != mouseSensivity)
+        {
 			currentSensivity_X = currentSensivity_Y = mouseSensivity;
 		}
 
 		sensivity_X = currentSensivity_X;
 		sensivity_Y = currentSensivity_Y;
 
-		if (axes == RotationAxes.MouseX) {
+		if (axes == RotationAxes.MouseX)
+        {
 			rotation_X += Input.GetAxis ("Mouse X") * sensivity_X;
 
 			rotation_X = ClampAngle (rotation_X, minimum_X, maximum_X);
@@ -62,7 +71,8 @@ public class FPSMouseLook : MonoBehaviour {
 			transform.localRotation = originalRotation * xQuaternion;
 		}
 
-		if (axes == RotationAxes.MouseY) {
+		if (axes == RotationAxes.MouseY)
+        {
 			rotation_Y += Input.GetAxis ("Mouse Y") * sensivity_Y;
 
 			rotation_Y = ClampAngle (rotation_Y, minimum_Y, maximum_Y);
@@ -74,8 +84,7 @@ public class FPSMouseLook : MonoBehaviour {
 
 	}
 
-} // class
-
+} 
 
 
 

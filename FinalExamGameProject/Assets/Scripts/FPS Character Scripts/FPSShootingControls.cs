@@ -15,27 +15,34 @@ public class FPSShootingControls : NetworkBehaviour {
 
 	public float damageAmount = 5f;
 
-	void Start () {
+	void Start ()
+    {
 		mainCam = transform.Find ("FPS View").Find ("FPS Camera").GetComponent<Camera> ();
 	}
 
-	void Update () {
+	void Update ()
+    {
 		Shoot ();
 	}
 
-	void Shoot() {
-		if (Input.GetMouseButtonDown (0) && Time.time > nextTimeToFire) {
+	void Shoot()
+    {
+		if (Input.GetMouseButtonDown (0) && Time.time > nextTimeToFire)
+        {
 			nextTimeToFire = Time.time + 1f / fireRate;
 
 			RaycastHit hit;
 
-			if (Physics.Raycast (mainCam.transform.position, mainCam.transform.forward, out hit)) {
+			if (Physics.Raycast (mainCam.transform.position, mainCam.transform.forward, out hit))
+            {
 				
-				if (hit.transform.tag == "Enemy") {
+				if (hit.transform.tag == "Enemy")
+                {
 
 					CmdDealDamage (hit.transform.gameObject, hit.point, hit.normal);
 
-				} else {
+				} else
+                {
 					Instantiate (concrete_Impact, hit.point, Quaternion.LookRotation (hit.normal));
 				}
 
@@ -45,14 +52,15 @@ public class FPSShootingControls : NetworkBehaviour {
 	}
 
 	[Command]
-	void CmdDealDamage(GameObject obj, Vector3 pos, Vector3 rotation) {
+	void CmdDealDamage(GameObject obj, Vector3 pos, Vector3 rotation)
+    {
 		obj.GetComponent<PlayerHealth> ().TakeDamage (damageAmount);
 
 		Instantiate (blood_Impact, pos, Quaternion.LookRotation (rotation));
 
 	}
 
-} // class
+} 
 
 
 

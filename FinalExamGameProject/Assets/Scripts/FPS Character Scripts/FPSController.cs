@@ -59,7 +59,8 @@ public class FPSController : NetworkBehaviour {
 		new Color(252, 208, 193, 255), new Color(0, 0, 0, 255)};
 	public Renderer playerRenderer;
 
-	void Start () {
+	void Start ()
+    {
 		firstPerson_View = transform.Find ("FPS View").transform;
 		charController = GetComponent<CharacterController> ();
 		speed = walkSpeed;
@@ -77,44 +78,54 @@ public class FPSController : NetworkBehaviour {
 		handsWeapon_Manager.weapons [0].SetActive (true);
 		current_Hands_Weapon = handsWeapon_Manager.weapons [0].GetComponent<FPSHandsWeapon> ();
 
-		if (isLocalPlayer) {
+		if (isLocalPlayer)
+        {
 			playerHolder.layer = LayerMask.NameToLayer ("Player");
 
-			foreach (Transform child in playerHolder.transform) {
+			foreach (Transform child in playerHolder.transform)
+            {
 				child.gameObject.layer = LayerMask.NameToLayer ("Player");
 			}
 
-			for (int i = 0; i < weapons_FPS.Length; i++) {
+			for (int i = 0; i < weapons_FPS.Length; i++)
+            {
 				weapons_FPS [i].layer = LayerMask.NameToLayer ("Player");
 			}
 
 			weaponsHolder.layer = LayerMask.NameToLayer ("Enemy");
 
-			foreach (Transform child in weaponsHolder.transform) {
+			foreach (Transform child in weaponsHolder.transform)
+            {
 				child.gameObject.layer = LayerMask.NameToLayer ("Enemy");
 			}
 		}
 
-		if (!isLocalPlayer) {
+		if (!isLocalPlayer)
+        {
 			playerHolder.layer = LayerMask.NameToLayer ("Enemy");
 
-			foreach (Transform child in playerHolder.transform) {
+			foreach (Transform child in playerHolder.transform)
+            {
 				child.gameObject.layer = LayerMask.NameToLayer ("Enemy");
 			}
 
-			for (int i = 0; i < weapons_FPS.Length; i++) {
+			for (int i = 0; i < weapons_FPS.Length; i++)
+            {
 				weapons_FPS [i].layer = LayerMask.NameToLayer ("Enemy");
 			}
 
 			weaponsHolder.layer = LayerMask.NameToLayer ("Player");
 
-			foreach (Transform child in weaponsHolder.transform) {
+			foreach (Transform child in weaponsHolder.transform)
+            {
 				child.gameObject.layer = LayerMask.NameToLayer ("Player");
 			}
 		}
 
-		if (!isLocalPlayer) {
-			for (int i = 0; i < mouseLook.Length; i++) {
+		if (!isLocalPlayer)
+        {
+			for (int i = 0; i < mouseLook.Length; i++)
+            {
 				mouseLook [i].enabled = false;
 			}
 		}
@@ -122,34 +133,35 @@ public class FPSController : NetworkBehaviour {
 		mainCam = transform.Find ("FPS View").Find ("FPS Camera").GetComponent<Camera> ();
 		mainCam.gameObject.SetActive (false);
 
-		if (!isLocalPlayer) {
-			for (int i = 0; i < playerRenderer.materials.Length; i++) {
+		if (!isLocalPlayer)
+        {
+			for (int i = 0; i < playerRenderer.materials.Length; i++)
+            {
 				playerRenderer.materials [i].color = playerColors [i];
 			}
 		}
 
 	}
 
-	public override void OnStartLocalPlayer() {
+	public override void OnStartLocalPlayer()
+    {
 		tag = "Player";
 	}
 
-	void Update () {
+	void Update ()
+    {
 
-		if (isLocalPlayer) {
-			if (!mainCam.gameObject.activeInHierarchy) {
+		if (isLocalPlayer)
+        {
+			if (!mainCam.gameObject.activeInHierarchy)
+            {
 				mainCam.gameObject.SetActive (true);
 			}
 		}
-
-		// IF WE ARE NOT THE LOCAL PLAYER
-		// E.G. MEANING WE ARE NOT RUNNING THIS CODE
-		// ON OUR OWN COMPUTER
-		if (!isLocalPlayer) {
-			// IF THIS IF STATEMENT IS TRUE
-			// AND WE EXECUTE THE return CODE
-			// ALL CODE THAT IS WRITTEN BELOW THE return
-			// WILL NOT BE EXECUTED
+       
+		if (!isLocalPlayer)
+        {
+			
 			return;
 		}
 
@@ -157,24 +169,36 @@ public class FPSController : NetworkBehaviour {
 		SelectWeapon ();
 	}
 
-	void PlayerMovement () {
-		if (Input.GetKey (KeyCode.W) || Input.GetKey (KeyCode.S)) {
-			if (Input.GetKey (KeyCode.W)) {
+	void PlayerMovement ()
+    {
+		if (Input.GetKey (KeyCode.W) || Input.GetKey (KeyCode.S))
+        {
+			if (Input.GetKey (KeyCode.W))
+            {
 				inputY_Set = 1f;
-			} else {
+			} else
+            {
 				inputY_Set = -1f;
 			}
-		} else {
+		}
+        else
+        {
 			inputY_Set = 0f;
 		}
 
-		if (Input.GetKey (KeyCode.A) || Input.GetKey (KeyCode.D)) {
-			if (Input.GetKey (KeyCode.A)) {
+		if (Input.GetKey (KeyCode.A) || Input.GetKey (KeyCode.D))
+        {
+			if (Input.GetKey (KeyCode.A))
+            {
 				inputX_Set = -1f;
-			} else {
+			}
+            else
+            {
 				inputX_Set = 1f;
 			}
-		} else {
+		}
+        else
+        {
 			inputX_Set = 0f;
 		}
 
@@ -189,9 +213,8 @@ public class FPSController : NetworkBehaviour {
 			Vector3.zero, Time.deltaTime * 5f);
 		firstPerson_View.localEulerAngles = firstPerson_View_Rotation;
 
-		if (is_Grounded) {
-
-			// HERE WE ARE GONNA CALL CROUCH AND SPRINT
+		if (is_Grounded)
+        {
 			PlayerCrouchingAndSprinting();
 
 			moveDirection = new Vector3 (inputX * inputModifyFactor, -antiBumpFactor,
@@ -199,7 +222,6 @@ public class FPSController : NetworkBehaviour {
 			
 			moveDirection = transform.TransformDirection (moveDirection) * speed;
 
-			// HERE WE ARE GONNA CALL JUMP
 			PlayerJump();
 		}
 
@@ -213,13 +235,18 @@ public class FPSController : NetworkBehaviour {
 
 	}
 
-	void PlayerCrouchingAndSprinting() {
-		if (Input.GetKeyDown (KeyCode.C)) {
+	void PlayerCrouchingAndSprinting()
+    {
+		if (Input.GetKeyDown (KeyCode.C))
+        {
 			
-			if (!is_Crouching) {
+			if (!is_Crouching)
+            {
 				is_Crouching = true;
-			} else {
-				if (CanGetUp ()) {
+			} else
+            {
+				if (CanGetUp ())
+                {
 					is_Crouching = false;
 				}
 			}
@@ -228,12 +255,18 @@ public class FPSController : NetworkBehaviour {
 			StartCoroutine (MoveCameraCrouch());
 		}
 
-		if (is_Crouching) {
+		if (is_Crouching)
+        {
 			speed = crouchSpeed;
-		} else {
-			if (Input.GetKey (KeyCode.LeftShift)) {
+		} else
+
+        {
+			if (Input.GetKey (KeyCode.LeftShift))
+            {
 				speed = runSpeed;
-			} else {
+			}
+            else
+            {
 				speed = walkSpeed;
 			}
 		}
@@ -242,14 +275,17 @@ public class FPSController : NetworkBehaviour {
 
 	}
 
-	bool CanGetUp() {
+	bool CanGetUp()
+    {
 		Ray groundRay = new Ray (transform.position, transform.up);
 		RaycastHit groundHit;
 
 		if (Physics.SphereCast (groundRay, charController.radius + 0.05f,
-			out groundHit, rayDistance, groundLayer)) {
+			out groundHit, rayDistance, groundLayer))
+        {
 
-			if (Vector3.Distance (transform.position, groundHit.point) < 2.3f) {
+			if (Vector3.Distance (transform.position, groundHit.point) < 2.3f)
+            {
 				return false;	
 			}
 		}
@@ -257,13 +293,15 @@ public class FPSController : NetworkBehaviour {
 		return true;
 	}
 
-	IEnumerator MoveCameraCrouch() {
+	IEnumerator MoveCameraCrouch()
+    {
 		charController.height = is_Crouching ? default_ControllerHeight / 1.5f : default_ControllerHeight;
 		charController.center = new Vector3 (0f, charController.height / 2f, 0f);
 
 		camHeight = is_Crouching ? default_CamPos.y / 1.5f : default_CamPos.y;
 
-		while (Mathf.Abs (camHeight - firstPerson_View.localPosition.y) > 0.01f) {
+		while (Mathf.Abs (camHeight - firstPerson_View.localPosition.y) > 0.01f)
+        {
 			
 			firstPerson_View.localPosition = Vector3.Lerp (firstPerson_View.localPosition,
 				new Vector3 (default_CamPos.x, camHeight, default_CamPos.z),
@@ -273,12 +311,16 @@ public class FPSController : NetworkBehaviour {
 		}
 	}
 
-	void PlayerJump() {
-		if (Input.GetKeyDown (KeyCode.Space)) {
+	void PlayerJump()
+    {
+		if (Input.GetKeyDown (KeyCode.Space))
+        {
 			
-			if (is_Crouching) {
+			if (is_Crouching)
+            {
 				
-				if (CanGetUp ()) {
+				if (CanGetUp ())
+                {
 					is_Crouching = false;
 
 					playerAnimation.PlayerCrouch (is_Crouching);
@@ -287,27 +329,32 @@ public class FPSController : NetworkBehaviour {
 					StartCoroutine (MoveCameraCrouch());
 				}
 
-			} else {
+			} else
+            {
 				moveDirection.y = jumpSpeed;
 			}	
 		}
 	}
 
-	void HandleAnimations() {
+	void HandleAnimations()
+    {
 		playerAnimation.Movement (charController.velocity.magnitude);
 		playerAnimation.PlayerJump (charController.velocity.y);
 
-		if (is_Crouching && charController.velocity.magnitude > 0f) {
+		if (is_Crouching && charController.velocity.magnitude > 0f)
+        {
 			playerAnimation.PlayerCrouchWalk (charController.velocity.magnitude);
 		}
 
-		// SHOOTING
-		if(Input.GetMouseButtonDown(0) && Time.time > nextTimeToFire) {
+		if(Input.GetMouseButtonDown(0) && Time.time > nextTimeToFire)
+        {
 			nextTimeToFire = Time.time + 1f / fireRate;
 
-			if (is_Crouching) {
+			if (is_Crouching)
+            {
 				playerAnimation.Shoot (false);
-			} else {
+			} else
+            {
 				playerAnimation.Shoot (true);
 			}
 
@@ -315,18 +362,24 @@ public class FPSController : NetworkBehaviour {
 			current_Hands_Weapon.Shoot ();
 		}
 
-		if (Input.GetKeyDown (KeyCode.R)) {
+
+		if (Input.GetKeyDown (KeyCode.R))
+        {
 			playerAnimation.ReloadGun ();
 			current_Hands_Weapon.Reload ();
 		}
 
 	}
 
-	void SelectWeapon() {
-		if (Input.GetKeyDown (KeyCode.Alpha1)) {
+	void SelectWeapon()
+    {
+		if (Input.GetKeyDown (KeyCode.Alpha1))
+        {
 
-			if (!handsWeapon_Manager.weapons [0].activeInHierarchy) {
-				for (int i = 0; i < handsWeapon_Manager.weapons.Length; i++) {
+			if (!handsWeapon_Manager.weapons [0].activeInHierarchy)
+            {
+				for (int i = 0; i < handsWeapon_Manager.weapons.Length; i++)
+                {
 					handsWeapon_Manager.weapons [i].SetActive (false);
 				}
 
@@ -336,8 +389,10 @@ public class FPSController : NetworkBehaviour {
 				current_Hands_Weapon = handsWeapon_Manager.weapons [0].GetComponent<FPSHandsWeapon> ();
 			}
 
-			if (!weapon_Manager.weapons [0].activeInHierarchy) {
-				for (int i = 0; i < weapon_Manager.weapons.Length; i++) {
+			if (!weapon_Manager.weapons [0].activeInHierarchy)
+            {
+				for (int i = 0; i < weapon_Manager.weapons.Length; i++)
+                {
 					weapon_Manager.weapons [i].SetActive (false);
 				}
 
@@ -349,10 +404,13 @@ public class FPSController : NetworkBehaviour {
 			}
 		}
 
-		if (Input.GetKeyDown (KeyCode.Alpha2)) {
+		if (Input.GetKeyDown (KeyCode.Alpha2))
+        {
 
-			if (!handsWeapon_Manager.weapons [1].activeInHierarchy) {
-				for (int i = 0; i < handsWeapon_Manager.weapons.Length; i++) {
+			if (!handsWeapon_Manager.weapons [1].activeInHierarchy)
+            {
+				for (int i = 0; i < handsWeapon_Manager.weapons.Length; i++)
+                {
 					handsWeapon_Manager.weapons [i].SetActive (false);
 				}
 
@@ -362,8 +420,11 @@ public class FPSController : NetworkBehaviour {
 				current_Hands_Weapon = handsWeapon_Manager.weapons [1].GetComponent<FPSHandsWeapon> ();
 			}
 
-			if (!weapon_Manager.weapons [1].activeInHierarchy) {
-				for (int i = 0; i < weapon_Manager.weapons.Length; i++) {
+
+			if (!weapon_Manager.weapons [1].activeInHierarchy)
+            {
+				for (int i = 0; i < weapon_Manager.weapons.Length; i++)
+                {
 					weapon_Manager.weapons [i].SetActive (false);
 				}
 
@@ -375,10 +436,13 @@ public class FPSController : NetworkBehaviour {
 			}
 		}
 
-		if (Input.GetKeyDown (KeyCode.Alpha3)) {
+		if (Input.GetKeyDown (KeyCode.Alpha3))
+        {
 
-			if (!handsWeapon_Manager.weapons [2].activeInHierarchy) {
-				for (int i = 0; i < handsWeapon_Manager.weapons.Length; i++) {
+			if (!handsWeapon_Manager.weapons [2].activeInHierarchy)
+            {
+				for (int i = 0; i < handsWeapon_Manager.weapons.Length; i++)
+                {
 					handsWeapon_Manager.weapons [i].SetActive (false);
 				}
 
@@ -388,8 +452,10 @@ public class FPSController : NetworkBehaviour {
 				current_Hands_Weapon = handsWeapon_Manager.weapons [2].GetComponent<FPSHandsWeapon> ();
 			}
 
-			if (!weapon_Manager.weapons [2].activeInHierarchy) {
-				for (int i = 0; i < weapon_Manager.weapons.Length; i++) {
+			if (!weapon_Manager.weapons [2].activeInHierarchy)
+            {
+				for (int i = 0; i < weapon_Manager.weapons.Length; i++)
+                {
 					weapon_Manager.weapons [i].SetActive (false);
 				}
 
@@ -403,7 +469,7 @@ public class FPSController : NetworkBehaviour {
 
 	}
 
-} // class
+}
 
 
 

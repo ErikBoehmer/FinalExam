@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class NetManager : NetworkManager {
+public class NetManager : NetworkManager
+{
 
 	private bool firstPlayerJoined;
 
-	public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerID) {
+	public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerID)
+    {
 
 		GameObject playerObj = Instantiate (playerPrefab, Vector3.zero, Quaternion.identity);
 
 		List<Transform> spawnPositions = NetworkManager.singleton.startPositions;
 
-		if (!firstPlayerJoined) {
+		if (!firstPlayerJoined)
+        {
 			firstPlayerJoined = true;
 			playerObj.transform.position = spawnPositions [0].position;
-		} else {
+		} else
+        {
 			playerObj.transform.position = spawnPositions [1].position;
 		}
 
@@ -24,22 +28,25 @@ public class NetManager : NetworkManager {
 
 	}
 
-	void SetPortAndAddress() {
+	void SetPortAndAddress()
+    {
 		NetworkManager.singleton.networkAddress = "localhost";
 		NetworkManager.singleton.networkPort = 7777;
 	}
 
-	public void HostGame() {
+	public void HostGame()
+    {
 		SetPortAndAddress ();
 		NetworkManager.singleton.StartHost ();
 	}
 
-	public void JoinGame() {
+	public void JoinGame()
+    {
 		SetPortAndAddress ();
 		NetworkManager.singleton.StartClient ();
 	}
 
-} // class
+} 
 
 
 

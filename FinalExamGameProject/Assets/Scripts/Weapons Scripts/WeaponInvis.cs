@@ -4,18 +4,13 @@ using UnityEngine;
 
 public class WeaponInvis : MonoBehaviour
 {
-
-    private ref_deonly render;
-
-    // Start is called before the first frame update
-    void Awake()
+    public void ToggleInvisibilty()
     {
-        this.render = this.GetComponent<ref_deonly>(false); 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Render rend = gameObject.GetComponent<Renderer>();
+        if (rend.enabled)
+            rend.enabled = false;
+        else
+            rend.enabled = true; 
     }
 }
+

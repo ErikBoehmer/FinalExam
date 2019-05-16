@@ -4,26 +4,26 @@ using UnityEngine;
 
 public class CursorController : MonoBehaviour {
 
-	void Start () {
-//		Cursor.lockState = CursorLockMode.Locked;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		ControlCursor ();
 	}
 
-	void ControlCursor() {
-		if (Input.GetKeyDown (KeyCode.Tab)) {
-			if (Cursor.lockState == CursorLockMode.Locked) {
+	void ControlCursor()
+    {
+		if (Input.GetKeyDown (KeyCode.Tab))
+        {
+			if (Cursor.lockState == CursorLockMode.Locked)
+            {
 				Cursor.lockState = CursorLockMode.None;
-			} else {
+			} else
+            {
 				Cursor.lockState = CursorLockMode.Locked;
 			}
 		}
 	}
 
-} // class
+} 
 
 
 
